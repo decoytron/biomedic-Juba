@@ -1,0 +1,29 @@
+<!-- registration.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section>
+    <h2>Registration</h2>
+
+    <!-- User Registration Form -->
+    <form action="{% url 'biomedic:registration' %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button type="submit">Register</button>
+    </form>
+
+    {% if patient.unique_number %}
+        <p>Your unique number is: <strong>{{ patient.unique_number }}</strong></p>
+    {% endif %}
+
+    {% if patient.nearest_hospital %}
+        <p>Nearest hospital offering treatment for your diseases: <strong>{{ patient.nearest_hospital }}</strong></p>
+    {% endif %}
+
+    <p>Already have an account? <a href="{% url 'biomedic:login' %}">Log in here</a>.</p>
+</section>
+
+{% endblock %}
+

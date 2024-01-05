@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BIO MEDIC - Empowering Lives, Erasing Stigma</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@100&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'biomedic_app/css/styles.css' %}">
+
+    
+</head>
+<body>
+    <header>
+        <h1>BIO MEDIC</h1>
+        <p><i>Empowering Lives, Erasing Stigma</i></p>
+        <img src="{% static 'biomedic_app/images/logo.jpg' %}" class="logo1">
+        
+    </header>    <nav class="nav-bar">
+        <ul> 
+        <li><a href="{% url 'biomedic:index' %}">Home</a></li> 
+        <li><a href="{% url 'biomedic:registration' %}">Register</a></li>
+        <li><a href="{% url 'biomedic:medication' %}">Order Medication</a></li>
+        <li><a href="{% url 'biomedic:counseling' %}">Counseling</a></li>
+        <li><a href="{% url 'biomedic:forum' %}">Community Forum</a></li>
+        <li><a href="{% url 'biomedic:elearning' %}">Educational Resources</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        {% block content %}
+        {% endblock content %}
+    </main>
+</body>
+</html>
