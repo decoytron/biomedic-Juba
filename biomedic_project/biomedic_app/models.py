@@ -1,6 +1,3 @@
-from django.db import models
-
-
 # biomedic_app/models.py
 from django.db import models
 
@@ -33,6 +30,7 @@ class ForumPost(models.Model):
     author = models.ForeignKey(Patient, on_delete=models.CASCADE)
     # Add other fields as needed
 class Topic(models.Model):
+    objects = None
     title = models.CharField(max_length=255)
     description = models.TextField()
 
@@ -40,8 +38,13 @@ class Topic(models.Model):
         return self.title
 
 class Post(models.Model):
+    objects = None
     topic = models.ForeignKey(Topic, on_delete=models.CASCADE)
     content = models.TextField()
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(args, kwargs)
+        self.id = None
 
     def __str__(self):
         return f"Post #{self.id} in {self.topic.title}"
