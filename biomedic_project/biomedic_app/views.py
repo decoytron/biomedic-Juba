@@ -1,15 +1,15 @@
-
 # biomedic_app/views.py
-import requests
-from django.shortcuts import render, redirect
-from .models import Patient, Topic, Post
-from django.http import HttpResponse
-from .forms import  RegistrationForm
-from geopy.geocoders import Nominatim
-from django.contrib.gis.db.models.functions import Distance
-from django.contrib.gis.geos import Point
+
 import random
 import string
+
+from django.contrib.sites import requests
+from django.http import HttpResponse
+from django.shortcuts import render, redirect
+from geopy.geocoders import Nominatim
+
+from .forms import RegistrationForm
+from .models import Topic, Post
 
 
 def index(request):
@@ -19,9 +19,10 @@ def index(request):
 def generate_unique_number():
     return ''.join(random.choices(string.ascii_uppercase + string.digits, k=8))
 
+
 def find_nearest_hospital(patient_location, hiv_status, tb_status, hypertension_status):
     # Replace with the actual healthcare API endpoint
-    api_url = 'https://example.com/api/find_nearest_hospital'
+    api_url = 'https://maps.googleapis.com/maps/api/place/details/json?place_id=ChIJrTLr-GyuEmsRBfy61i59si0&fields=address_components&key=YOUR_API_KEY'
 
     # Prepare request parameters
     params = {
@@ -40,6 +41,8 @@ def find_nearest_hospital(patient_location, hiv_status, tb_status, hypertension_
         return nearest_hospital
 
     return None
+
+
 def registration(request):
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
@@ -75,18 +78,23 @@ def login_view(request):
     # Your login view logic here
     return render(request, 'biomedic_app/login.html')
 
+
 def medication(request):
     # Implement medication ordering logic
     return render(request, 'biomedic_app/medication.html')
+
 
 def counseling(request):
     # Implement counseling access logic
     return render(request, 'biomedic_app/counseling.html')
 
+
 def forum(request):
-    topics = Topic.objects.all()
+    Topic.objects.all()
     # Implement forums logic
     return render(request, 'biomedic_app/forum.html')
+
+
 def create_topic(request):
     if request.method == 'POST':
         title = request.POST.get('title')
@@ -96,10 +104,13 @@ def create_topic(request):
         return redirect('forum')  # Redirect back to the forum page
 
     return HttpResponse("Invalid request method")
+
+
 def view_topic(request, topic_id):
     topic = Topic.objects.get(id=topic_id)
     posts = Post.objects.filter(topic=topic)
     return render(request, 'view_topic.html', {'topic': topic, 'posts': posts})
+
 
 def elearning(request):
     # Implement educational platform logic
